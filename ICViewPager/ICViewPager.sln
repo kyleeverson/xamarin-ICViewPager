@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICViewPager", "ICViewPager.csproj", "{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Debug|iPhone.Build.0 = Debug|iPhone
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Release|iPhone.ActiveCfg = Release|iPhone
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Release|iPhone.Build.0 = Release|iPhone
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = ICViewPager.csproj
+	EndGlobalSection
+EndGlobal
