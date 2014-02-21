@@ -4,7 +4,7 @@ xamarin-ICViewPager
 C# Version of ICViewPager
 
 
-Here is a sample of creating an ViewPagerController.  First create the ViewPagerSource, this will contain the UIViewController and the tab name for each Page.
+Here is a sample of creating an ViewPagerController.  First create the ViewPagerSource, this will contain the UIViewController and the tab name for each Page.  This sample adds 15 UIViewControllers to the ViewPagerController and sets the tabHeight to 44 and the width for each tab to 120.
 
 ```C#
 			ViewPagerSource pagerSource = new ViewPagerSource ();
@@ -28,5 +28,5 @@ Here is a sample of creating an ViewPagerController.  First create the ViewPager
 ```
 
 
-# XCode Version
+### XCode Version
 This project was inspired from the XCode version located at [/monsieurje/ICViewPager](https://github.com/monsieurje/ICViewPager).
