@@ -26,3 +26,7 @@ Here is a sample of creating an ViewPagerController.  First create the ViewPager
 			View.Add (myViewController.View);
 			AddChildViewController (myViewController);
 ```
+
+
+# XCode Version
+This project was inspired from the XCode version located at [/monsieurje/ICViewPager](https://github.com/monsieurje/ICViewPager).
