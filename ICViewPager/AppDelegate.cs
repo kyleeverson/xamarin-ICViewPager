@@ -26,22 +26,10 @@ namespace ICViewPager
 			// create a new window instance based on the screen size
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 
-			ViewPagerSource pagerSource = new ViewPagerSource ();
-
-			for (int i = 0; i < 5; i++) {
-				UITestViewController testController = new UITestViewController ();
-
-				ViewPagerItem item = new ViewPagerItem ();
-				item.content = testController;
-				item.tabName = "Tab #1";
-
-				pagerSource.AddItem (item);
-			}
-
-			ViewPagerController myViewController = new ViewPagerController (pagerSource);
-			
+			var myViewController = new TestContainerViewController ();
+			var navController = new UINavigationController (myViewController);
 			// If you have defined a root view controller, set it here:
-			window.RootViewController = myViewController;
+			window.RootViewController = navController;
 			
 			// make the window visible
 			window.MakeKeyAndVisible ();

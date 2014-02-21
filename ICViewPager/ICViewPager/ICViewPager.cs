@@ -3,6 +3,7 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using System.Collections.Generic;
 using System.Drawing;
+using MonoTouch.ObjCRuntime;
 
 namespace ICViewPager
 {
@@ -20,9 +21,14 @@ namespace ICViewPager
 	{
 		public List<ViewPagerItem> items { get; set; }
 
+		public float tabHeight { get; set; }
+		public float tabWidth { get; set; }
+
 		public ViewPagerSource()
 		{
 			items = new List<ViewPagerItem> ();
+			tabHeight = 44.0f;
+			tabWidth = 128.0f;
 		}
 
 		public void AddItem(ViewPagerItem item)
@@ -38,124 +44,86 @@ namespace ICViewPager
 
 	public class ViewPagerController : UIViewController
 	{
-		public float ViewPagerOptionTabHeight { get; set; }
-		public float ViewPagerOptionTabOffset { get; set; }
-		public float ViewPagerOptionTabWidth { get; set; }
-		public float ViewPagerOptionTabLocation { get; set; }
-		public float ViewPagerOptionStartFromSecondTab { get; set; }
-		public float ViewPagerOptionCenterCurrentTab { get; set; }
-		public float ViewPagerOptionFixFormerTabsPositions { get; set; }
-		public float ViewPagerOptionFixLatterTabsPositions { get; set; }
-
 		ViewPagerSource pagerSource;
 
 		UIScrollView tabsView;
-		UIView contentView;
 
 		List<TabElement> tabElements;
 
 		public ViewPagerController (ViewPagerSource source)
 		{
-			ViewPagerOptionTabHeight = 44.0f;
-			ViewPagerOptionTabOffset = 56.0f;
-			ViewPagerOptionTabWidth = 128.0f;
-			ViewPagerOptionTabLocation = 1.0f;
-			ViewPagerOptionStartFromSecondTab = 0.0f;
-			ViewPagerOptionCenterCurrentTab = 0.0f;
-			ViewPagerOptionFixFormerTabsPositions = 0.0f;
-			ViewPagerOptionFixLatterTabsPositions = 0.0f;
-
 			pagerSource = source;
 			tabElements = new List<TabElement> ();
+		}
+
+		[Export ("MySelector")]
+		public void MyObjectiveCHandler (UITapGestureRecognizer rec)
+		{
+			PointF pt = rec.LocationInView (tabsView);
+			int index = (int)(pt.X / pagerSource.tabWidth);
+			SelectTabAtIndex (index);
 		}
 
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 
+			UIGestureRecognizer gesture = new UITapGestureRecognizer ();
+			gesture.AddTarget (this, new Selector ("MySelector"));
+
 			RectangleF rect = View.Frame;
 
-			tabsView = new UIScrollView(new RectangleF(0, rect.Bottom - ViewPagerOptionTabHeight, rect.Width, ViewPagerOptionTabHeight));
-			tabsView.BackgroundColor = UIColor.Blue;
+			tabsView = new UIScrollView(new RectangleF(0, rect.Bottom - pagerSource.tabHeight, rect.Width, pagerSource.tabHeight));
+			tabsView.AddGestureRecognizer (gesture);
+			tabsView.BackgroundColor = UIColor.LightGray;
+			tabsView.ShowsHorizontalScrollIndicator = false;
+			tabsView.ShowsVerticalScrollIndicator = false;
+			tabsView.AutoresizingMask = UIViewAutoresizing.FlexibleTopMargin;
 			View.Add (tabsView);
 
 			reloadData ();
+
+			SelectTabAtIndex (0);
 		}
 
-
-		/*		*
+		/**
 		 * Reloads all tabs and contents
 		 */
 		public void reloadData()
 		{
+			for (int i = 0; i < tabElements.Count; i++) {
+				tabElements [i].RemoveFromSuperview ();
+			}
+
 			tabElements.RemoveRange (0, tabElements.Count);
 			for (int i = 0; i < pagerSource.items.Count; i++) {
-				TabElement element = new TabElement (new RectangleF (i * ViewPagerOptionTabWidth, 0, ViewPagerOptionTabWidth, ViewPagerOptionTabHeight));
+				TabElement element = new TabElement (new RectangleF (i * pagerSource.tabWidth, 0, pagerSource.tabWidth, pagerSource.tabHeight));
 				element.tabLabel.Text = pagerSource.items [i].tabName;
+				element.Enabled = false;
 				tabsView.Add (element);
+				tabElements.Add (element);
 			}
-			tabsView.ContentSize = new SizeF (pagerSource.items.Count * ViewPagerOptionTabWidth, ViewPagerOptionTabHeight);
+			tabsView.ContentSize = new SizeF (pagerSource.items.Count * pagerSource.tabWidth, pagerSource.tabHeight);
 		}
 
-		/*		*
+		/**
 		 * Selects the given tab and shows the content at this index
 		 *
 		 * @param index The index of the tab that will be selected
 		 */
-		public void selectTabAtIndex(int index)
+		public void SelectTabAtIndex(int index)
 		{
+			for (int i = 0; i < tabElements.Count; i++) {
+				tabElements [i].SetActive (i == index);
+				pagerSource.items [i].content.View.RemoveFromSuperview ();
+				if (i == index) {
+					View.Add (pagerSource.items [i].content.View);
+					pagerSource.items [i].content.View.Frame = new RectangleF (0, 0, View.Frame.Width, View.Frame.Height - pagerSource.tabHeight);
+				}
+			}
+			RectangleF rect = new RectangleF (index * pagerSource.tabWidth, 0, pagerSource.tabWidth, pagerSource.tabHeight);
+			tabsView.ScrollRectToVisible (rect, true);
 		}
-
-		/*		*
-		 * Reloads the appearance of the tabs view. 
-		 * Adjusts tabs' width, offset, the center, fix former/latter tabs cases.
-		 * Without implementing the - viewPager:valueForOption:withDefault: delegate method, 
-		 * this method does nothing.
-		 * Calling this method without changing any option will affect the performance.
-		 */
-		public void setNeedsReloadOptions()
-		{
-		}
-
-		/*		*
-		 * Reloads the colors.
-		 * You can make ViewPager to reload its components colors.
-		 * Changing `ViewPagerTabsView` and `ViewPagerContent` color will have no effect to performance,
-		 * but `ViewPagerIndicator`, as it will need to iterate through all tabs to update it.
-		 * Calling this method without changing any color won't affect the performance, 
-		 * but will cause your delegate method (if you implemented it) to be called three times.
-		 */
-		public void setNeedsReloadColors()
-		{
-		}
-
-		/*		*
-		 * Call this method to get the value of a given option.
-		 * Returns NAN for any undefined option.
-		 *
-		 * @param option The option key. Keys are defined in ViewPagerController.h
-		 *
-		 * @return A CGFloat, defining the setting for the given option
-		 */
-//		public float valueForOption(ViewPagerOption option)
-//		{
-//
-//			return 0.0f;
-//		}
-
-		/*		*
-		 * Call this method to get the color of a given component.
-		 * Returns [UIColor clearColor] for any undefined component.
-		 *
-		 * @param component The component key. Keys are defined in ViewPagerController.h
-		 *
-		 * @return A UIColor for the given component
-		 */
-//		public UIColor colorForComponent(ViewPagerComponent component)
-//		{
-//
-//			return null;
-//		}
 
 		class TabElement : UIControl
 		{
@@ -169,14 +137,24 @@ namespace ICViewPager
 				tabLabel = new UILabel();
 				tabLabel.Frame = new RectangleF(0, 0, frame.Width, 30);
 				tabLabel.TextAlignment = UITextAlignment.Center;
+
 				highlightBlock = new UIView();
-				highlightBlock.BackgroundColor = UIColor.Yellow;
+				highlightBlock.BackgroundColor = UIColor.LightGray;
 				highlightBlock.Frame = new RectangleF(0, frame.Height-5, frame.Width, 5);
 
 				Add(tabLabel);
 				Add(highlightBlock);
 
-				BackgroundColor = UIColor.Brown;
+				BackgroundColor = UIColor.LightGray;
+			}
+
+			public void SetActive(bool flag)
+			{
+				if (flag == true) {
+					highlightBlock.BackgroundColor = UIColor.Red;
+				} else {
+					highlightBlock.BackgroundColor = UIColor.LightGray;
+				}
 			}
 		}
 	}

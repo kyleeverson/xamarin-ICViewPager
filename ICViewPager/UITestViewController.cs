@@ -7,9 +7,11 @@ namespace ICViewPager
 	public class UITestViewController : UIViewController
 	{
 		UILabel textLabel;
+		string labelText;
 
-		public UITestViewController ()
+		public UITestViewController (string txt)
 		{
+			labelText = txt;
 		}
 
 		public override void ViewDidLoad ()
@@ -18,7 +20,7 @@ namespace ICViewPager
 
 			View.BackgroundColor = UIColor.Yellow;
 			textLabel = new UILabel (new RectangleF (0, 0, 100, 30));
-			textLabel.Text = "ABC";
+			textLabel.Text = labelText;
 			View.Add (textLabel);
 		}
 	}
