@@ -28,7 +28,7 @@ Here is a sample of creating an ViewPagerController.  First create the ViewPager
 ```
 
 ### Screen Shot
-<img src="https://raw2.github.com/kyleeverson/xamarin-ICViewPager/master/ViewPagerController.png" width=120 alt="ICViewPager" title="ICViewPager">
+<img src="https://raw2.github.com/kyleeverson/xamarin-ICViewPager/master/ViewPagerController.png" width=240 alt="ICViewPager" title="ICViewPager">
 
 
 ### XCode Version
