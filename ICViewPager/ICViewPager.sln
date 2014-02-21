@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICViewPager", "ICViewPager.csproj", "{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{391078D5-0919-4149-9F66-1D37D1662453}"
+	ProjectSection(SolutionItems) = preProject
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -25,6 +31,8 @@ Global
 		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Release|iPhone.Build.0 = Release|iPhone
 		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{CD6A6B24-9F1F-400A-98AB-208146C8B3BA}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = ICViewPager.csproj
