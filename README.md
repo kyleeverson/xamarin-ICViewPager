@@ -1,8 +1,11 @@
-xamarin-ICViewPager
-===================
+## C# Version of ViewPagerController
 
-C# Version of ICViewPager
+This is a ViewController that shows horizontal scrollable tabs along the bottom of the view which when selected, bring up a new ViewController in the section of the Pager Controller.
 
+### Screen Shot
+<img src="https://raw2.github.com/kyleeverson/xamarin-ICViewPager/master/ViewPagerController.png" width=240 alt="ICViewPager" title="ICViewPager">
+
+To use this control in your projects, take the cs file in the ICViewPager folder and place in your application.
 
 Here is a sample of creating an ViewPagerController.  First create the ViewPagerSource, this will contain the UIViewController and the tab name for each Page.  This sample adds 15 UIViewControllers to the ViewPagerController and sets the tabHeight to 44 and the width for each tab to 120.
 
@@ -26,10 +29,6 @@ Here is a sample of creating an ViewPagerController.  First create the ViewPager
 			View.Add (myViewController.View);
 			AddChildViewController (myViewController);
 ```
-
-### Screen Shot
-<img src="https://raw2.github.com/kyleeverson/xamarin-ICViewPager/master/ViewPagerController.png" width=240 alt="ICViewPager" title="ICViewPager">
-
 
 ### XCode Version
 This project was inspired from the XCode version located at [/monsieurje/ICViewPager](https://github.com/monsieurje/ICViewPager).
